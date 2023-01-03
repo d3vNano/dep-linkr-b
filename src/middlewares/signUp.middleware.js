@@ -12,12 +12,13 @@ export async function validateSignUp(req, res, next) {
   }
   try{
     const userExists = await repositorySignUp(email);
+    
     if(userExists.rows.length !==0){
       return res.status(409).send({message: "Esse email já existe!"});
     }
    }catch(err){
     res.status(500).send(err.message);
    }
-  
+  res.locals.user = { email, password, username, pictureUrl }
   next();
 }
