@@ -1,4 +1,3 @@
-import { connectionDB } from "../database/db.js";
 import signUpSchema from "../models/signUp.schema.js";
 import {repositorySignUp} from "../repository/validate.signUp.repository.js"
 
@@ -12,7 +11,7 @@ export async function validateSignUp(req, res, next) {
   }
   try{
     const userExists = await repositorySignUp(email);
-    
+
     if(userExists.rows.length !==0){
       return res.status(409).send({message: "Esse email já existe!"});
     }

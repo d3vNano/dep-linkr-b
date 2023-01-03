@@ -1,4 +1,4 @@
-import bcrypt from 'bcrypt';
+
 import {repositoryRegistration} from "../repository/validate.signUp.repository.js";
 
 export default async function signUp(req, res){
