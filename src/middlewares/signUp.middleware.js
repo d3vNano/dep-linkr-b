@@ -10,10 +10,14 @@ export async function validateSignUp(req, res, next) {
     const errors = error.details.map((detail) => detail.message);
     return res.status(422).send({ errors });
   }
-   try{
+  try{
     const userExists = await repositorySignUp(email);
+    if(userExists.rows.length !==0){
+      return res.status(409).send({message: "Esse email já existe!"});
+    }
    }catch(err){
     res.status(500).send(err.message);
    }
+  
   next();
 }
