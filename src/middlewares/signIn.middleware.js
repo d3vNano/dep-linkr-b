@@ -15,20 +15,20 @@ export async function validateSignIn(req,res,next) {
   try{
     const userExists = await validateUser(email);
 
-    if(!userExists){
+    if(userExists.rows.length <= 0){
       return res.status(401).send("Usuário não cadastrado!");
     }
     const passwordOk = bcrypt.compareSync(
       password,
       userExists.rows[0].password
     );
-    if (!passwordOk) {
+    if (!passwordOk ) {
       return res.status(401).send("Usuário ou senha Incorreta!");
     }
 
   }catch (err) {
     console.log(err);
-    res.sendStatus(422);
+    return res.sendStatus(422);
   }
   res.locals.user = {email, password}
   next();

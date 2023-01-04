@@ -15,10 +15,10 @@ export default async function signIn(req,res){
       [token, userExists.rows[0].id]
     );
   
-    res.status(200).send({ token, name: userExists.name });
+   return res.status(200).send({ token, name: userExists.name });
   } catch (err) {
     console.log(err);
-    res.sendStatus(422);
+    return res.sendStatus(422);
   }
 
   }
