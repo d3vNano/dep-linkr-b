@@ -20,8 +20,12 @@ export async function validateSignIn(req,res,next) {
     if (!passwordOk ) {
       return res.status(409).send({message:"Usuário ou senha Incorreta!"});
     }
-
-   return res.sendStatus(200);
+  const { error } = signInSchema.validate(req.body, { abortEarly: false });
+  if (error) {
+    const errors = error.details.map((detail) => detail.message);
+    return res.status(422).send({ errors });
+  }
+   
 
 
   }catch (err) {
