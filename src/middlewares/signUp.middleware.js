@@ -19,7 +19,7 @@ export async function validateSignUp(req, res, next) {
     const userExists = await repositorySignUp(email);
 
     if(userExists.rows.length !==0){
-      return res.status(409).send({message: "Esse email já existe!"});
+      return res.status(409).send({message: "Esse email já está cadastrado!"});
     }
    }catch(err){
     res.status(500).send(err.message);
