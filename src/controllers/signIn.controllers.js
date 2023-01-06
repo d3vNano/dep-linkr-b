@@ -12,7 +12,8 @@ export default async function signIn(req,res){
  
     await validatesSession(token, userExists);
   
-   return res.status(200).send({ token, name: userExists.name });
+  const user = userExists.rows[0]
+   return res.status(200).send({ token, username: user.username, picture_url: user.picture_url});
   } catch (err) {
     console.log(err);
     return res.sendStatus(422);

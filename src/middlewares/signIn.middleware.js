@@ -11,7 +11,7 @@ export async function validateSignIn(req,res,next) {
     return res.status(422).send({message: "Por favor, preencha todos os campos corretamente!"})
   }
   const userExists = await validateUser(email);
-  
+
   const passwordOk = bcrypt.compareSync(
     password,
     userExists.rows[0].password
