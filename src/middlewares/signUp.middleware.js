@@ -2,7 +2,7 @@ import signUpSchema from "../models/signUp.schema.js";
 import {repositorySignUp} from "../repository/validate.signUp.repository.js"
 
 export async function validateSignUp(req, res, next) {
-  const { email, password, username, pictureUrl } = req.body;
+  const { email, password, username, picture_url } = req.body;
 
   const { error } = signUpSchema.validate(req.body, { abortEarly: false });
   if (error) {
@@ -18,6 +18,6 @@ export async function validateSignUp(req, res, next) {
    }catch(err){
     res.status(500).send(err.message);
    }
-  res.locals.user = { email, password, username, pictureUrl }
+  res.locals.user = { email, password, username, picture_url }
   next();
 }
