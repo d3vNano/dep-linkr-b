@@ -10,6 +10,7 @@ function AllPosts (){
     JOIN users
         ON posts.user_id = users.id
     ORDER BY created_at DESC
+    LIMIT 20
     `)
 }
 
