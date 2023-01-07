@@ -19,7 +19,7 @@ async function takeInfoWithUserId(req,res){
 
         const info = userInfo.rows[0]
         //lembrar de melhorar essa função
-        const object ={
+        const userMock ={
             id:info.id,
             username: info.username,
             picture_url: info.picture_url,
@@ -38,7 +38,7 @@ async function takeInfoWithUserId(req,res){
                 }
             ]
         }
-        res.status(200).send(object)
+        res.status(200).send(userMock)
     } catch (error) {
         console.log(error);
         res.sendStatus(500);
