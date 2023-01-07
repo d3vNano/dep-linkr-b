@@ -1,9 +1,12 @@
 import { Router } from "express";
-import { validateSearch } from "../middlewares/users.middlewares.js";
-import { takeUserWithUsername } from "../controllers/users.controllers.js";
+import { validateSearch, validateUserId } from "../middlewares/users.middlewares.js";
+import { takeInfoWithUserId, takeUserWithUsername } from "../controllers/users.controllers.js";
+import { validateToken } from "../middlewares/token.middleware.js";
 
 const usersRouter = Router();
 
 usersRouter.get("/user/:username", validateSearch, takeUserWithUsername);
+usersRouter.get("/user/:user_id/posts", validateToken, validateUserId,takeInfoWithUserId )
+
 
 export default usersRouter;
