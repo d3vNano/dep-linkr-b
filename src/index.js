@@ -3,6 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import authRouter from "./routes/auth.routes.js";
 import usersRouter from "./routes/user.routes.js";
+import postsRouter from "./routes/posts.routes.js";
 import hashtagsRouter from "./routes/hashtags.routes.js";
 dotenv.config();
 
@@ -12,7 +13,6 @@ app.use(cors());
 
 app.use(authRouter);
 app.use(usersRouter);
-app.use(hashtagsRouter);
 
 const port = process.env.PORT;
 
