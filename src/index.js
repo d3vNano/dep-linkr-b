@@ -13,7 +13,8 @@ app.use(cors());
 
 app.use(authRouter);
 app.use(usersRouter);
-
+app.use(postsRouter);
+app.use(hashtagsRouter);
 const port = process.env.PORT;
 
 app.listen(port, () => console.log(`Server running in port ${port}`));

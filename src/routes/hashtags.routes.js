@@ -4,7 +4,7 @@ import {getBestHashtags, getPostsByHashtag} from "../controllers/hashtags.contro
 const hashtagsRouter = Router();
 
 hashtagsRouter.get("/hashtags", getBestHashtags);
-hashtagsRouter.get("/hashtags", getPostsByHashtag);
+hashtagsRouter.get("/hashtag:/hashtag", getPostsByHashtag);
 
 
 
