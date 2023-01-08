@@ -1,10 +1,10 @@
 import { Router } from "express";
-import {getBestHashtags, getPostsByHashtag} from "../controllers/hashtags.controllers.js";
+import {getBestHashtags} from "../controllers/hashtags.controllers.js";
 
 const hashtagsRouter = Router();
 
 hashtagsRouter.get("/hashtags", getBestHashtags);
-hashtagsRouter.get("/hashtag:/hashtag", getPostsByHashtag);
+//hashtagsRouter.get("/hashtags", getPostsByHashtag);
 
 
 
