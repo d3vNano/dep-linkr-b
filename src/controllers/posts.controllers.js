@@ -1,8 +1,20 @@
 import postsRepositories from "../repository/posts.repository.js";
 import urlMetadata from "url-metadata";
 import { connectionDB } from "../database/db.js";
-async function postList(req,res){
-    try {
+
+
+async function createPost(req, res) {
+    const { link, description, user_id } = req.body;
+
+    res.status(201).send("New post created!");
+}
+
+async function postList(req, res) {
+
+        res.status(200).send((await listPosts).rows);
+    } catch (error) {
+        console.log(error);
+        res.sendStatus(500);
 
 const link = await connectionDB.query("Select link from posts");
 const arr = [];
@@ -28,7 +40,8 @@ console.log(response);
     } catch (error) {
         console.log(error)
        return res.sendStatus(500);
-    }
-};
 
-export {postList};
+    }
+}
+
+export { postList, createPost };
