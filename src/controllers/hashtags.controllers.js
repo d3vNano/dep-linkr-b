@@ -20,19 +20,31 @@ export async function getBestHashtags(req,res) {
   const teste = await connectionDB.query("select * from hashtags");
   console.log(teste.rows, "teste.rows");
 
-const t = teste.rows.map((hashtag)=>{
-  const query = connectionDB.query(`SELECT description, REGEXP_MATCHES(description,'#${hashtag.name}') FROM posts`)
-  return res.send({...hashtag, quantity: query.rows.length})
-})
-
-
-
+const array = []
+for(let i=0; i<teste.rows.length; i++){
+  const hashtag = teste.rows[i]
+  const query = await connectionDB.query(`SELECT description, REGEXP_MATCHES(description,'#${hashtag.name}') FROM posts`)
+  console.log(query.rows,"ha");
+array.push({...hashtag, quantity:query.rows.length})
+}
+array.sort(compare);
    
   const bestHashtags =  await connectionDB.query(`SELECT * FROM hashtags`);
   return res.send(bestHashtags.rows);
 }catch (err) {
+  console.log(err);
   return res.status(400).send(err);
 }
 
+
+}
+function compare( a, b ) {
+  if ( a.quantity < b.quantity ){
+    return -1;
+  }
+  if ( a.quantity > b.quantity ){
+    return 1;
+  }
+  return 0;
 }
 
