@@ -1,4 +1,5 @@
 import userRepositories from "../repository/validate.user.repository.js";
+import postsRepositories from "../repository/posts.repository.js"
 
 async function takeUserWithUsername(req, res){
     const { username } = req.params;
@@ -17,26 +18,14 @@ async function takeInfoWithUserId(req,res){
     try {
         const userInfo = await userRepositories.postsUser_id(user_id);
 
-        const info = userInfo.rows[0]
+        const info = userInfo.rows[0];
         //lembrar de melhorar essa função
+        const listOfUserPosts = await postsRepositories.listOfUserPosts(user_id);
         const userMock ={
             id:info.id,
             username: info.username,
             picture_url: info.picture_url,
-            posts:[
-                {
-                    id: 3,
-                    link:"www.google.com",
-                    description:"Melhor site de busca",
-                    likes:0
-                },
-                {
-                    id: 4,
-                    link:"www.driven.com",
-                    description:"O cursinho que to fazendo",
-                    likes:0
-                }
-            ]
+            posts: listOfUserPosts.rows
         }
         res.status(200).send(userMock)
     } catch (error) {

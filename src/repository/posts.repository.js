@@ -1,6 +1,6 @@
 import { connectionDB } from "../database/db.js";
 
-function AllPosts (){
+function allPosts (){
     return connectionDB.query(`
     SELECT 
 	    posts.*,
@@ -14,8 +14,23 @@ function AllPosts (){
     `)
 }
 
-const postsRepositories = {
-    AllPosts
+function listOfUserPosts(user_id){
+    return connectionDB.query(`
+    SELECT 
+        id, 
+        link, 
+        description, 
+        likes 
+	FROM posts
+	WHERE user_id = $1
+	ORDER BY created_at DESC
+	LIMIT 20;
+    `,[user_id])
 }
 
-export default postsRepositories
+const postsRepositories = {
+    allPosts,
+    listOfUserPosts
+}
+
+export default postsRepositories;
