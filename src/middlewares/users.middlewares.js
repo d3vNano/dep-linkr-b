@@ -25,13 +25,13 @@ async function validateUserId (req, res, next){
     try {
         const idParseint = parseInt(user_id)
         
-        if(idParseint.constructor === Number){
-            const user_idExist = await userRepositories.validateUser_id(user_id);
+        if(idParseint.constructor !== Number) return res.status(404).send("User_id not valid!")
 
-            if(!user_idExist.rows[0]) return res.status(404).send("User_id not exist!")
+        const user_idExist = await userRepositories.validateUser_id(user_id);
 
-            next()
-        }
+        if(!user_idExist.rows[0]) return res.status(404).send("User_id not exist!")
+
+        next()
     } catch (error) {
         console.log(error);
         res.sendStatus(422);
