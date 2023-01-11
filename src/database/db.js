@@ -1,10 +1,19 @@
 import pkg from "pg";
 import dotenv from "dotenv";
-dotenv.config();
 
+dotenv.config();
 const { Pool } = pkg;
 
-export const connectionDB = new Pool({
-  connectionString: process.env.DATABASE_URL,
+const configDB = {
+    connectionString: process.env.DATABASE_URL,
+};
 
-});
+if (process.env.MODE === "PROD") {
+    configDB.ssl = {
+        rejectUnauthorized: false,
+    };
+}
+
+const connectionDB = new Pool(configDB);
+
+export { connectionDB };
