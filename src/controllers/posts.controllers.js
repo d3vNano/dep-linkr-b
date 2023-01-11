@@ -41,7 +41,7 @@ console.log(sumLikes.rows, "sum");
 }
 
 async function createPost(req, res) {
-    const { link, description, user_id } = req.body;
+    const { link, description } = req.body;
 
     res.sendStatus(201);
 }

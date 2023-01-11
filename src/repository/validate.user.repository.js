@@ -8,7 +8,7 @@ function validateUsername(username){
             picture_url
         FROM users
         WHERE username
-        LIKE $1
+        ILIKE $1
     `,[`${username}%`]);
 };
 
