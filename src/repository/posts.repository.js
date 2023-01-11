@@ -1,5 +1,6 @@
 import { connectionDB } from "../database/db.js";
 
+
 function allPosts (){
     return connectionDB.query(`
     SELECT 
@@ -13,6 +14,15 @@ function allPosts (){
     LIMIT 20
     `)
 }
+
+function sumLikes(postLike){
+    return connectionDB.query(`select posts.id ,count (likes_info.id)
+    from likes_info
+    join posts
+    on likes_info.post_id = posts.id
+    Group By posts.id
+    `)
+};
 
 function listOfUserPosts(user_id){
     return connectionDB.query(`
@@ -30,7 +40,8 @@ function listOfUserPosts(user_id){
 
 const postsRepositories = {
     allPosts,
-    listOfUserPosts
+    listOfUserPosts,
+    sumLikes
 }
 
 export default postsRepositories;

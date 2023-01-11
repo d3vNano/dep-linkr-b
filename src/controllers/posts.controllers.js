@@ -5,6 +5,7 @@ import { connectionDB } from "../database/db.js";
 async function postList(req, res) {
     try {
         const link = await connectionDB.query("Select link from posts");
+
         const arr = [];
         for (let i = 0; i < link.rows.length; i++) {
             const metadata = await urlMetadata(`http://${link.rows[i].link}`, {
@@ -20,11 +21,17 @@ async function postList(req, res) {
         }
         const response = [];
         const listPosts = await postsRepositories.allPosts();
+        const postLike = listPosts.rows.id
+       const sumLikes = await postsRepositories.sumLikes(postLike);
+console.log(sumLikes.rows, "sum");
+
         for (let i = 0; i < listPosts.rows.length; i++) {
-            response.push({ ...listPosts.rows[i], ...arr[i] });
+            response.push({ ...listPosts.rows[i], ...sumLikes.rows[i], ...arr[i] });
         }
 
         console.log(response);
+
+
 
         return res.status(200).send(response);
     } catch (error) {
