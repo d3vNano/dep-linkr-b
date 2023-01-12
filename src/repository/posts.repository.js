@@ -14,9 +14,9 @@ function allPosts() {
     `);
 }
 
-function listOfUserPosts(user_id) {
-    return connectionDB.query(
-        `
+function listOfUserPosts(user_id){
+    return connectionDB.query(`
+
     SELECT 
         id, 
         link, 
