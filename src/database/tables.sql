@@ -6,7 +6,7 @@ CREATE TABLE users (
 	password TEXT NOT NULL,
 	username VARCHAR(50) NOT NULL,
 	picture_url TEXT NOT NULL,
-	created_at DATE NOT NULL DEFAULT NOW()
+	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE sessions (
@@ -14,7 +14,7 @@ CREATE TABLE sessions (
 	token TEXT NOT NULL,
 	user_id INTEGER NOT NULL REFERENCES "users"("id"),
 	state BOOLEAN NOT NULL DEFAULT FALSE,
-	created_at DATE NOT NULL DEFAULT NOW()
+	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 )
 
 CREATE TABLE posts (
@@ -23,25 +23,32 @@ CREATE TABLE posts (
 	description TEXT NOT NULL,
 	user_id INTEGER NOT NULL REFERENCES "users"("id"),
 	likes INTEGER NOT NULL DEFAULT 0,
-	created_at DATE NOT NULL DEFAULT NOW()
+	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 )
 
 CREATE TABLE likes_info (
 	id SERIAL PRIMARY KEY,
 	user_id INTEGER NOT NULL REFERENCES "users"("id"),
 	post_id INTEGER NOT NULL REFERENCES "posts"("id"),
-	created_at DATE NOT NULL DEFAULT NOW()
+	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 )
 
 CREATE TABLE hashtags(
     id SERIAL PRIMARY KEY,
     name TEXT NOT NULL,
-    created_at DATE NOT NULL DEFAULT NOW()
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 )
 
 CREATE TABLE post_hashtags (
     id SERIAL PRIMARY KEY,
     post_id INTEGER NOT NULL REFERENCES "posts"("id"),
     hashtag_id INTEGER NOT NULL REFERENCES "hashtags"("id"),
-    created_at DATE NOT NULL DEFAULT NOW()
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+)
+
+CREATE TABLE follows (
+	id SERIAL PRIMARY KEY,
+	user_id INTEGER NOT NULL REFERENCES "users"("id"),
+	follow_user_id INTEGER NOT NULL REFERENCES "users"("id"),
+	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 )
