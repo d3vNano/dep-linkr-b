@@ -15,12 +15,14 @@ function allPosts (){
     `)
 }
 
-function sumLikes(postLike){
+function sumLikes(){
     return connectionDB.query(`select posts.id ,count (likes_info.id)
     from likes_info
-    join posts
+    full outer join posts
     on likes_info.post_id = posts.id
     Group By posts.id
+    ORDER BY posts.created_at DESC
+	LIMIT 20;
     `)
 };
 
