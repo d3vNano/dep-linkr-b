@@ -6,6 +6,7 @@ import usersRouter from "./routes/user.routes.js";
 import hashtagsRouter from "./routes/hashtags.routes.js";
 import postsRouter from "./routes/posts.routes.js";
 import likesRouter from "./routes/likes.routes.js";
+import followRouter from "./routes/follow.routes.js";
 
 dotenv.config();
 
@@ -18,6 +19,7 @@ app.use(usersRouter);
 app.use(hashtagsRouter);
 app.use(postsRouter)
 app.use(likesRouter);
+app.use(followRouter);
 
 const port = process.env.PORT;
 
