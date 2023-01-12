@@ -7,7 +7,7 @@ import { connectionDB } from "../database/db.js";
 
 async function postList(req, res) {
     const {token} = res.locals;
-    console.log(token);
+  
 
     try {
         const link = await connectionDB.query("Select link from posts");
@@ -33,8 +33,7 @@ users.id = sessions.user_id
         const listPosts = await postsRepositories.allPosts();
         const postLike = listPosts.rows.id
        const sumLikes = await postsRepositories.sumLikes(postLike);
-console.log(sumLikes.rows, "sum");
-console.log(listPosts.rows,"list");
+
 
         for (let i = 0; i < listPosts.rows.length; i++) {
             const isLiked = await connectionDB.query(`SELECT * FROM likes_info WHERE user_id = $1 AND post_id = $2`,[user.rows[0].id, listPosts.rows[i].id])
