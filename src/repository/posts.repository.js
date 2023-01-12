@@ -1,10 +1,6 @@
 import { connectionDB } from "../database/db.js";
 
-<<<<<<< Updated upstream
-function AllPosts (){
-=======
 function allPosts() {
->>>>>>> Stashed changes
     return connectionDB.query(`
     SELECT 
 	    posts.*,
@@ -18,13 +14,6 @@ function allPosts() {
     `);
 }
 
-<<<<<<< Updated upstream
-const postsRepositories = {
-    AllPosts
-}
-
-export default postsRepositories
-=======
 function listOfUserPosts(user_id) {
     return connectionDB.query(
         `
@@ -61,4 +50,3 @@ const postsRepositories = {
 };
 
 export default postsRepositories;
->>>>>>> Stashed changes

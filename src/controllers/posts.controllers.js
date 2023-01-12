@@ -38,12 +38,9 @@ async function postList(req, res) {
 
 async function createPost(req, res) {
     const { link, description, user_id } = req.body;
-<<<<<<< Updated upstream
-=======
 
     try {
         await postsRepositories.createNewPost(link, description, user_id);
->>>>>>> Stashed changes
 
         res.sendStatus(201);
     } catch (error) {
