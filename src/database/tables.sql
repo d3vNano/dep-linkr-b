@@ -45,3 +45,10 @@ CREATE TABLE post_hashtags (
     hashtag_id INTEGER NOT NULL REFERENCES "hashtags"("id"),
     created_at DATE NOT NULL DEFAULT NOW()
 )
+
+CREATE TABLE follows (
+	id SERIAL PRIMARY KEY,
+	user_id INTEGER NOT NULL REFERENCES "users"("id"),
+	follow_user_id INTEGER NOT NULL REFERENCES "users"("id"),
+	created_at DATE NOT NULL DEFAULT NOW()
+)
