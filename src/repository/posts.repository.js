@@ -1,7 +1,7 @@
 import { connectionDB } from "../database/db.js";
 
 
-function allPosts (){
+function allPosts(){
     return connectionDB.query(`
     SELECT 
 	    posts.*,
@@ -13,6 +13,17 @@ function allPosts (){
     ORDER BY created_at DESC
     LIMIT 20
     `);
+}
+
+function sumLikes(){
+    return connectionDB.query(`select posts.id ,count (likes_info.id)
+    from likes_info
+    full outer join posts
+    on likes_info.post_id = posts.id
+    Group By posts.id
+    ORDER BY posts.created_at DESC
+	LIMIT 20;
+    `)
 }
 
 function sumLikes(){
@@ -58,8 +69,8 @@ function createNewPost(link, description, user_id) {
 const postsRepositories = {
     allPosts,
     listOfUserPosts,
-    sumLikes,
     createNewPost,
+    sumLikes
 };
 
 export default postsRepositories;

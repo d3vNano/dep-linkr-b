@@ -50,7 +50,7 @@ console.log(listPosts.rows,"list");
 }
 
 async function createPost(req, res) {
-    const { link, description } = req.body;
+    const { link, description, user_id } = req.body;
 
     try {
         await postsRepositories.createNewPost(link, description, user_id);
