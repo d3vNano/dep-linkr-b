@@ -7,6 +7,7 @@ try{
 const likeExists = await connectionDB.query(`
 SELECT * FROM likes_info WHERE user_id = $1 AND post_id = $2
 `, [user_id, post_id]);
+console.log(likeExists.rows, "likeExists");
 
 if(likeExists.rows.length > 0){
   await connectionDB.query(`
