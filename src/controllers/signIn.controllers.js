@@ -13,14 +13,12 @@ export default async function signIn(req, res) {
         await validatesSession(token, userExists);
 
         const user = userExists.rows[0];
-        return res
-            .status(200)
-            .send({
-                token,
-                username: user.username,
-                picture_url: user.picture_url,
-                user_id: user.id,
-            });
+        return res.status(200).send({
+            token,
+            username: user.username,
+            picture_url: user.picture_url,
+            user_id: user.id,
+        });
     } catch (err) {
         console.log(err);
         return res.sendStatus(422);
