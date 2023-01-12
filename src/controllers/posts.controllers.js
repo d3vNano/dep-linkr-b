@@ -22,7 +22,7 @@ async function postList(req, res) {
             });
         }
         const response = [];
-        const listPosts = await postsRepositories.AllPosts();
+        const listPosts = await postsRepositories.allPosts();
         for (let i = 0; i < listPosts.rows.length; i++) {
             response.push({ ...listPosts.rows[i], ...arr[i] });
         }
