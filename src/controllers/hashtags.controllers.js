@@ -37,13 +37,13 @@ export async function getBestHashtags(req,res) {
 
 
   const teste = await connectionDB.query("select * from hashtags");
-  console.log(teste.rows, "teste.rows");
+
 
 const array = []
 for(let i=0; i<teste.rows.length; i++){
   const hashtag = teste.rows[i]
   const query = await connectionDB.query(`SELECT description, REGEXP_MATCHES(description,'#${hashtag.name}') FROM posts`)
-  console.log(query.rows,"ha");
+
 array.push({...hashtag, quantity:query.rows.length})
 }
 array.sort(compare);
