@@ -37,7 +37,7 @@ async function postList(req, res) {
 }
 
 async function createPost(req, res) {
-    const { link, description, user_id } = req.body;
+    const { link, description } = req.body;
 
     try {
         await postsRepositories.createNewPost(link, description, user_id);
