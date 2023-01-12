@@ -1,3 +1,6 @@
+import chalk from "chalk";
+import dayjs from "dayjs";
+
 import postsRepositories from "../repository/posts.repository.js";
 import urlMetadata from "url-metadata";
 import { connectionDB } from "../database/db.js";
@@ -15,7 +18,7 @@ users.id = sessions.user_id
  console.log(user,"userr");
         const arr = [];
         for (let i = 0; i < link.rows.length; i++) {
-            const metadata = await urlMetadata(`http://${link.rows[i].link}`, {
+            const metadata = await urlMetadata(`${link.rows[i].link}`, {
                 descriptionLength: 110,
             });
             const { url, title, description, image } = metadata;
@@ -49,7 +52,19 @@ console.log(listPosts.rows,"list");
 async function createPost(req, res) {
     const { link, description } = req.body;
 
-    res.sendStatus(201);
+    try {
+        await postsRepositories.createNewPost(link, description, user_id);
+
+        res.sendStatus(201);
+    } catch (error) {
+        console.log(
+            chalk.redBright(
+                dayjs().format("YYYY-MM-DD HH:mm:ss"),
+                error.message
+            )
+        );
+        res.sendStatus(500);
+    }
 }
 
 export { postList, createPost };
