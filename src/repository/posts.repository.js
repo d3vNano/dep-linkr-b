@@ -24,7 +24,7 @@ function sumLikes(){
     ORDER BY posts.created_at DESC
 	LIMIT 20;
     `)
-}
+};
 
 function listOfUserPosts(user_id){
     return connectionDB.query(`
