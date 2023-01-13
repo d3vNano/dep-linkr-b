@@ -18,32 +18,30 @@ import { connectionDB } from "../database/db.js";
 //         //const listPosts = await postsRepositories.listOfUserPosts(user);
 //        // const links = await postsRepositories.listLinks(user)
 
-
 //         //console.log(listPosts.rows)
 //         return res.status(200).send(links.rows)
 //     } catch (error) {
-//      console.log(error)   
+//      console.log(error)
 //     }
 // }
 
 async function postList(req, res) {
-    const {token} = res.locals;
-  
-    
+    const { token } = res.locals;
 
     try {
-        const user = await connectionDB.query(`
+        const user = await connectionDB.query(
+            `
         select users.id from users
             join sessions on
 users.id = sessions.user_id
- where token = $1`,[token]);
-        const userId = user.rows[0].id
-        const links = await postsRepositories.listLinks(userId)
-        
+ where token = $1`,
+            [token]
+        );
+        const userId = user.rows[0].id;
+        const links = await postsRepositories.listLinks(userId);
+
         const arr = [];
         for (let i = 0; i < links.rows.length; i++) {
-
-            
             const metadata = await urlMetadata(`${links.rows[i].link}`, {
                 descriptionLength: 250,
             });
@@ -56,23 +54,25 @@ users.id = sessions.user_id
                 metaImage: image,
             });
         }
-        
+
         const response = [];
         const listPosts = await postsRepositories.listOfUserPosts(userId);
-        const postLike = listPosts.rows.id
+        const postLike = listPosts.rows.id;
         const sumLikes = await postsRepositories.sumLikes(postLike);
 
-        
         for (let i = 0; i < listPosts.rows.length; i++) {
-            const isLiked = await connectionDB.query(`SELECT * FROM likes_info WHERE user_id = $1 AND post_id = $2`,[user.rows[0].id, listPosts.rows[i].id])
-            response.push({ ...listPosts.rows[i], 
-                count:sumLikes.rows[i].count,
-                isLiked:isLiked.rows.length ===0?false:true, 
-                ...arr[i] });   
-            
-        
+            const isLiked = await connectionDB.query(
+                `SELECT * FROM likes_info WHERE user_id = $1 AND post_id = $2`,
+                [user.rows[0].id, listPosts.rows[i].id]
+            );
+            response.push({
+                ...listPosts.rows[i],
+                count: sumLikes.rows[i].count,
+                isLiked: isLiked.rows.length === 0 ? false : true,
+                ...arr[i],
+            });
         }
-    
+
         return res.status(200).send(response);
     } catch (error) {
         console.log(error);
@@ -98,4 +98,4 @@ async function createPost(req, res) {
     }
 }
 
-export { postList, createPost};
+export { postList, createPost };
