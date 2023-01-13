@@ -16,4 +16,5 @@ postsRouter.post(
 
 postsRouter.get("/timeline", validateToken, postList);
 
+
 export default postsRouter;
