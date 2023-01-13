@@ -3,7 +3,6 @@ import { isFollowing } from "../services/follow.services.js";
 import followsRepository from "../repository/follows.repository.js";
 export async function addFollow(req, res) {
     const { user_id, follow_user_id } = req.body;
-    console.log(req.body);
     const arr = [];
     try {
         const followExists = await connectionDB.query(

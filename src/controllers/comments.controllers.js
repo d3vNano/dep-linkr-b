@@ -21,13 +21,12 @@ async function insertComments(req, res) {
 }
 
 async function listComments(req, res) {
-    const { post_id } = req.params;
+    const { post_id, logged_user_id } = req.params;
 
     try {
         const { postDates, commentDates } =
-            await commentsRepository.getComments(post_id);
-
-        res.send({ post: postDates.rows, comments: commentDates.rows });
+            await commentsRepository.getComments(post_id, logged_user_id);
+        res.send({ post: postDates.rows, comments: commentDates });
     } catch (error) {
         console.log(
             chalk.redBright(

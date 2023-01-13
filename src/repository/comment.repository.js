@@ -1,6 +1,9 @@
 import { connectionDB } from "../database/db.js";
 
-async function getComments(post_id) {
+import followsRepository from "./follows.repository.js";
+import { isFollowing } from "../services/follow.services.js";
+
+async function getComments(post_id, logged_user_id) {
     /*preciso dos dados:
     foto do usuario,
     nome do usuario,
@@ -26,7 +29,7 @@ async function getComments(post_id) {
         [post_id]
     );
 
-    const commentDates = await connectionDB.query(
+    const { rows } = await connectionDB.query(
         `
         SELECT
             comments.id,
@@ -46,6 +49,20 @@ async function getComments(post_id) {
             posts.id = $1`,
         [post_id]
     );
+    const commentDates = [];
+
+    for (const comment of rows) {
+        const comment_user_id = comment.user_id;
+
+        const followExists = await followsRepository.getFollow(
+            logged_user_id,
+            comment_user_id
+        );
+
+        let result = await isFollowing(followExists);
+
+        commentDates.push({ ...comment, follower: result });
+    }
 
     return { postDates, commentDates };
 }
