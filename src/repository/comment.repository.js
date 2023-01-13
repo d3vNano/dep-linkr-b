@@ -15,9 +15,7 @@ async function getComments(post_id, logged_user_id) {
         `
         SELECT
             posts.id,
-            posts.user_id AS author_id,
-            users.picture_url,
-            users.username
+            posts.user_id AS author_id
         FROM
             posts
         JOIN
@@ -33,16 +31,18 @@ async function getComments(post_id, logged_user_id) {
         `
         SELECT
             comments.id,
-            comments.user_id,
-            comments.comment
+            comments.user_id AS comment_user_id,
+            comments.comment AS comment_text, 
+            users.username AS comment_username,
+            users.picture_url AS comment_picture_url
         FROM
-            posts
+            comments
         JOIN
             users
         ON
-            posts.user_id = users.id
+            comments.user_id = users.id
         JOIN
-            comments
+            posts
         ON
             posts.id = comments.post_id
         WHERE

@@ -26,7 +26,11 @@ async function listComments(req, res) {
     try {
         const { postDates, commentDates } =
             await commentsRepository.getComments(post_id, logged_user_id);
-        res.send({ post: postDates.rows, comments: commentDates });
+
+        res.send({
+            post: postDates.rows,
+            comments: commentDates,
+        });
     } catch (error) {
         console.log(
             chalk.redBright(
