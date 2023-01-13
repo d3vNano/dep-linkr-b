@@ -2,9 +2,9 @@ import userRepositories from "../repository/validate.user.repository.js";
 import postsRepositories from "../repository/posts.repository.js"
 
 async function takeUserWithUsername(req, res){
-    const { username } = req.params;
+    const { username, user_id } = req.params;
     try {
-        const usernameList = await userRepositories.validateUsername(username);
+        const usernameList = await userRepositories.validateUsername(username, user_id);
 
         res.status(200).send(usernameList.rows)
     } catch (error) {
