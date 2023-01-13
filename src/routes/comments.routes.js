@@ -8,6 +8,6 @@ import {
 const commentsRouter = Router();
 
 commentsRouter.post("/comment", insertComments);
-commentsRouter.get("/comments/:post_id", listComments);
+commentsRouter.get("/comments/:post_id/:logged_user_id", listComments);
 
 export default commentsRouter;

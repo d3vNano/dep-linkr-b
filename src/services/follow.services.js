@@ -1,10 +1,10 @@
-function isFollowing(followExists) {
+async function isFollowing(followExists) {
     let result;
 
     if (followExists.rowCount === 0) {
-        result = true;
-    } else {
         result = false;
+    } else {
+        result = true;
     }
     return result;
 }
