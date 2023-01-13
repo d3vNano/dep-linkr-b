@@ -1,15 +1,14 @@
 import { connectionDB } from "../database/db.js";
 
-function validateUsername(username){
+function validateUsername(username, user_id){
     return connectionDB.query(`
-        SELECT
-            id,
-            username,
-            picture_url
-        FROM users
-        WHERE username
-        ILIKE $1
-    `,[`${username}%`]);
+    select users.id, users.username, users.picture_url, follows.follow_user_id 
+    from users
+    join follows on
+    users.id = follows.user_id 
+    where users.username ILIke $1
+    and follows.user_id = $2
+    order by follows.follow_user_id`, [`${username}%`, user_id])
 };
 
 function validateUser_id(user_id){
