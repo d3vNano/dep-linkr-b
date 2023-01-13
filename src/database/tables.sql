@@ -24,7 +24,15 @@ CREATE TABLE posts (
 	user_id INTEGER NOT NULL REFERENCES "users"("id"),
 	likes INTEGER NOT NULL DEFAULT 0,
 	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-)
+);
+
+CREATE TABLE comment_posts(
+	id SERIAL PRIMARY KEY,
+	user_id INTEGER NOT NULL REFERENCES "users"("id"),
+	post_id INTEGER NOT NULL REFERENCES "posts"("id"),
+	description TEXT NOT NULL,
+	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
 
 CREATE TABLE likes_info (
 	id SERIAL PRIMARY KEY,

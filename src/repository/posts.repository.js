@@ -39,11 +39,15 @@ function sumLikes() {
     `);
 }
 
-function listOfUserPosts(userId) {
-    return connectionDB.query(
-        `
-    select posts.*, follows.follow_user_id as seguindo from posts
-    join follows on 
+
+
+function listOfUserPosts(userId){
+    return connectionDB.query(`
+    select posts.*, 
+    follows.follow_user_id as usuario_que_sigo 
+    from posts
+    join 
+    follows on 
     follows.user_id = posts.user_id
     join users On
     users.id = follows.user_id
