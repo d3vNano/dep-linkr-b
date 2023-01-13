@@ -60,3 +60,10 @@ CREATE TABLE follows (
 	follow_user_id INTEGER NOT NULL REFERENCES "users"("id"),
 	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 )
+
+CREATE TABLE comments (
+    id SERIAL PRIMARY KEY,
+    comment TEXT NOT NULL,
+    user_id INTEGER NOT NULL REFERENCES "users"("id"),
+    post_id INTEGER NOT NULL REFERENCES "posts"("id")
+)

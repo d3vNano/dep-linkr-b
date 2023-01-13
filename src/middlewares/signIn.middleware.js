@@ -15,7 +15,7 @@ const userExists = await validateUser(email);
 if (userExists.rows.length === 0) {
 return res.status(409).send({message:"Usuário ou senha Incorreta!"});
 }
-console.log(password, userExists.rows[0].password);
+
 const passwordOk = bcrypt.compareSync(
 password,
 userExists.rows[0].password

@@ -26,20 +26,33 @@ function sumLikes(){
     `)
 };
 
-function listOfUserPosts(user_id){
+function listOfUserPosts(userId){
     return connectionDB.query(`
-
-    SELECT 
-        id, 
-        link, 
-        description, 
-        likes 
-	FROM posts
-	WHERE user_id = $1
-	ORDER BY created_at DESC
-	LIMIT 20;
+    select posts.*, follows.follow_user_id as seguindo from posts
+    join follows on 
+    follows.user_id = posts.user_id
+    join users On
+    users.id = follows.user_id
+    where follows.user_id = $1
+    order by posts.created_at desc
+    ;
     `,
-        [user_id]
+        [userId]
+    );
+}
+
+function listLinks(userId){
+    return connectionDB.query(`
+    select posts.link from posts
+    join follows on 
+    follows.user_id = posts.user_id
+    join users On
+    users.id = follows.user_id
+    where follows.user_id = $1
+    order by posts.created_at desc
+    ;
+    `,
+        [userId]
     );
 }
 
@@ -59,7 +72,8 @@ const postsRepositories = {
     allPosts,
     listOfUserPosts,
     createNewPost,
-    sumLikes
+    sumLikes,
+    listLinks
 };
 
 export default postsRepositories;
